@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:file="http://www.mulesoft.org/schema/mule/file"
+      xmlns="http://www.mulesoft.org/schema/mule/core"
+      xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+        http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+
+    <file:config name="file">
+        <file:connection workingDir="${workingDir}" />
+    </file:config>
+
+    <file:matcher name="globalMatcher" directories="REQUIRE" filenamePattern="sub*" />
+
+    <flow name="list">
+        <file:list config-ref="file" directoryPath="#[vars.path]" recursive="#[vars.recursive]" />
+    </flow>
+
+    <flow name="listWithSizeCheck">
+        <file:list config-ref="file" directoryPath="#[vars.path]" recursive="#[vars.recursive]"
+                   timeBetweenSizeCheck="500"/>
+    </flow>
+
+    <flow name="listWithEmbeddedPredicate">
+        <file:list config-ref="file" directoryPath="#[vars.path]" recursive="#[vars.recursive]">
+            <file:matcher filenamePattern="*[1-2]*.html" />
+        </file:list>
+    </flow>
+
+    <flow name="listWithGlobalMatcher">
+        <file:list config-ref="file" directoryPath="#[vars.path]" recursive="#[vars.recursive]" matcher="globalMatcher"/>
+    </flow>
+
+    <flow name="listWithExpressionMatcher">
+        <file:list config-ref="file" directoryPath="#[vars.path]" recursive="#[vars.recursive]" matcher="#[{filenamePattern: 'sub*', directories: 'REQUIRE'}]"/>
+    </flow>
+
+    <flow name="listFilesRecursivelyWithNameFilter">
+        <file:list config-ref="file" directoryPath="#[vars.path]" recursive="#[vars.recursive]">
+            <file:matcher directories="EXCLUDE" filenamePattern="*" />
+        </file:list>
+    </flow>
+
+    <flow name="listFilesRecursivelyWithSpecificNameFilter">
+        <file:list config-ref="file" directoryPath="#[vars.path]" recursive="#[vars.recursive]">
+            <file:matcher directories="EXCLUDE" filenamePattern="test-file-6.html" />
+        </file:list>
+    </flow>
+</mule>
