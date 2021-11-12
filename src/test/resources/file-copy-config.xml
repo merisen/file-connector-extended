@@ -9,7 +9,7 @@
         <file:copy config-ref="file" sourcePath="#[vars.source]" targetPath="#[vars.target]" overwrite="#[vars.overwrite]" createParentDirectories="#[vars.createParent]" renameTo="#[vars.renameTo]"/>
     </flow>
 
-    <flow name="readAndDo">
+    <flow name="readAndDo-">
         <file:read config-ref="file" path="#[vars.source]" />
         <file:copy config-ref="file" sourcePath="#[vars.source]" targetPath="#[vars.target]" overwrite="#[vars.overwrite]" createParentDirectories="#[vars.createParent]" renameTo="#[vars.renameTo]"/>
     </flow>
