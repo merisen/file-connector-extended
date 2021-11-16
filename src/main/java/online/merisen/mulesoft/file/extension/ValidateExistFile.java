@@ -4,7 +4,7 @@ import org.mule.extension.file.common.api.FileSystem;
 
 public class ValidateExistFile implements IValidateExistFile {
 	@Override
-	public void validateExistFile(FileSystem fileSystem, String directoryPath, String fileName) {
-		// TODO: ...
+	public boolean validateExistFile(FileSystem fileSystem, String directoryPath, String fileName) {
+		return true;
 	}
 }

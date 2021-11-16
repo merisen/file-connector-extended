@@ -6,6 +6,7 @@ import static org.mule.runtime.api.meta.model.display.PathModel.Type.FILE;
 
 import org.mule.extension.file.common.api.FileSystem;
 import org.mule.extension.file.common.api.exceptions.FileRenameErrorTypeProvider;
+
 import org.mule.runtime.extension.api.annotation.error.Throws;
 import org.mule.runtime.extension.api.annotation.param.Connection;
 import org.mule.runtime.extension.api.annotation.param.display.Path;
@@ -17,10 +18,11 @@ public interface IValidateExistFile {
 	 *
 	 * @param fileSystem a reference to the host {@link FileSystem}
 	 * @param directoryPath directory's name
+	 * @param fileName file name
 	 */
 	@Summary("Validate exist file")
 	@Throws(FileRenameErrorTypeProvider.class)
-	public void validateExistFile(@SuppressWarnings("rawtypes") 
+	public boolean validateExistFile(@SuppressWarnings("rawtypes") 
 			@Connection FileSystem fileSystem,
 			@Path(type = DIRECTORY, location = EXTERNAL) String directoryPath, 
 			@Path(type = FILE, location = EXTERNAL) String fileName);
